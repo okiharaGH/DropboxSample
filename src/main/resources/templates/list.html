@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Dropbox API Demo - [[${userName}]]</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div class="contents">
+	
+		<div class="wrapper">
+			<h1>Dropbox Account</h1>
+			
+			<table class="table">
+				<caption>Account Information</caption>
+				<tr>
+					<th>Name</th>
+					<td th:text="${accout_map.name}"></td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td th:text="${accout_map.email}"></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="wrapper">
+			<form action="/upload" enctype="multipart/form-data" method="post">
+				<div>
+					<label>
+						File Upload:<br>
+						<input type="file" name="upload_file" required="required">
+					</label>
+					<input type="hidden" name="upload_path" th:value="${dbx_path}" />
+				</div>
+				<div>
+					<input type="submit" value="Upload" />
+				</div>
+			</form>
+		</div>
+		
+		<div class="wrapper">
+			<form action="/create" method="post">
+				<div>
+					<label>
+						Create Folder:<br>
+						<input type="text" name="folder_name" required="required">
+					</label>
+					<input type="hidden" name="create_path" th:value="${dbx_path}" />
+				</div>
+				<div>
+					<input type="submit" value="Create" />
+				</div>
+			</form>
+		</div>
+		
+		<div class="wrapper">
+			<table class="table">
+				<caption>List</caption>
+				
+				<tr th:if="${dbx_path!=''}" class="folder">
+					<td><img th:src="@{/images/up_arrow.svg}" alt="folder" class="img-icon img-center"/></td>
+					<td><a href="../">../</a></td>
+				</tr>
+				
+				<tr th:each="folder_list:${folder_list}">
+					<th><img th:src="@{/images/folder_icon.svg}" alt="folder" class="img-icon img-center"/></th>
+					<td colspan="2"><a th:href="'./' + ${folder_list.name} + '/'" th:text="'/' + ${folder_list.name}"></a></td>
+				</tr>
+				
+				<tr th:each="file_list:${file_list}">
+					<th><img th:src="@{/images/file_icon.svg}" alt="file" class="img-icon img-center"/></th>
+					<td th:text="${file_list.name}"></td>
+					<td>
+						<a th:href="'/download?download_path=' + ${dbx_path} + '&file_name=' + ${file_list.name}">
+							<img th:src="@{/images/download_icon.svg}" alt="download" class="img-icon img-center"/>
+						</a>
+					</td>
+					<td>
+						<a th:href="'/delete?delete_path=' + ${dbx_path} + '&file_name=' + ${file_list.name}">
+							<img th:src="@{/images/garbage_can_icon.svg}" alt="delete" class="img-icon img-center"/>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Dropbox API Demo</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div class="contents">
+		<div class="wrapper">
+			<h1>Dropbox API Demo</h1>
+			<form action="./" method="post">
+				<div>
+					<label>
+						Access Token:<br>
+						<input type="text" name="token" required="required" />
+					</label>
+				</div>
+				<div>
+					<input type="submit" value="Submit" />
+				</div>
+				<div>
+					<p th:text="${errmsg}" class="errmsg"></p>
+				</div>
+			</form>
+			<p><a href="https://www.dropbox.com/developers/apps" target="_blanck">Dropbox Console</a></p>
+		</div>
+	</div>
+</body>
+</html>
